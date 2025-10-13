@@ -17,6 +17,8 @@ public class Symulacja {
 
         int matches = 0;
         int ilosc_prob = 0;
+
+        long start = System.currentTimeMillis();
         while (matches < 6) {
             ilosc_prob++;
             matches = 0;
@@ -36,7 +38,10 @@ public class Symulacja {
                 }
             }
         }
+
+        long end = System.currentTimeMillis();
         System.out.println(numbers);
         System.out.println("Liczba prob wynosi " + ilosc_prob);
+        System.out.println("Czas wykonania programu wynosi " + (end - start) + "ms");
     }
 }
