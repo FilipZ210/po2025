@@ -3,45 +3,48 @@ import animals.*;
 import java.util.Random;
 
 public class Zoo {
-    Animal[] animals = new Animal[100];
-    Random rand = new Random();
+    private Animal[] animals = new Animal[100];
 
-    private void fillAnimals() {
-        String[] names = {"Polly", "George", "Tom", "Mel"};
+    public void fillRandom(){
+        Random rand = new Random();
+        String[] names = {"Polly", "George","Tom", "Mel", "Jerry", "Mickey"};
 
-        for (int i = 0; i < animals.length; i++) {
+        for(int i = 0; i < animals.length; i++){
             int number = rand.nextInt(3);
-            String name = names[rand.nextInt(names.length)];
+            String new_name = names[rand.nextInt(names.length)];
 
-            switch (number) {
-                case 0 -> animals[i] = new Parrot(name);
-                case 1 -> animals[i] = new Snake(name);
-                case 2 -> animals[i] = new Dog(name);
+            switch (number){
+                case 0 -> animals[i] = new Dog(new_name);
+                case 1 -> animals[i] = new Parrot(new_name);
+                case 2 -> animals[i] = new Snake(new_name);
             }
-
-
         }
     }
 
-    public int countTotalLegs() {
+    public int countLegs(){
         int sum = 0;
-        for (Animal animal : animals) {
-            sum += animal.getLegs();
+        for(int i = 0; i < animals.length; i++){
+            sum += animals[i].getLegs();
         }
         return sum;
     }
 
-    public void printAllAnimals() {
-        for (Animal animal : animals) {
-            System.out.println(animal.getDescription());
+    public void printAnimals(){
 
+        for(int i = 0; i < animals.length; i++){
+            int legs = animals[i].getLegs();
+            System.out.println(animals[i].getDescription());
+            System.out.println(animals[i].makeSound());
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Zoo zoo = new Zoo();
-        zoo.fillAnimals();
-        System.out.println(zoo.countTotalLegs());
-        zoo.printAllAnimals();
+        zoo.fillRandom();
+        System.out.println(zoo.countLegs());
+        zoo.printAnimals();
+
     }
+
+
 }

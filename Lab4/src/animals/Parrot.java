@@ -7,6 +7,10 @@ public class Parrot extends Animal {
     }
 
     public String getDescription() {
-        return "Papuga o imieniu " + name + " ma " + iloscNog;
+        return "Parrot named " + name + " has " + legs + " legs";
+    }
+
+    public String makeSound() {
+        return "CWIERK";
     }
 }

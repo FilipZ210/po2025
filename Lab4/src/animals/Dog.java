@@ -6,7 +6,11 @@ public class Dog extends Animal{
     }
 
     public String getDescription() {
-        return "Pieso imieniu " + name + " ma " + iloscNog;
+        return "Dog named " + name + " has " + legs + " legs";
+    }
+
+    public String makeSound() {
+        return "HAU HAU";
     }
 }
 

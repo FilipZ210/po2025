@@ -1,18 +1,23 @@
 package animals;
 
 public abstract class Animal {
-    int iloscNog;
-    String name;
+    protected String name;
+    protected int legs;
 
-    public Animal(String name, int iloscNog) {
-        this.name = name;
-        this.iloscNog = iloscNog;
+    public Animal(String name, int legs) {
+       this.name = name;
+       this.legs = legs;
     }
-
-    public int  getLegs() {
-        return iloscNog;
-    }
-
 
     public abstract String getDescription();
+
+    public abstract String makeSound();
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLegs() {
+        return legs;
+    }
 }
