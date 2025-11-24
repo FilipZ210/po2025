@@ -203,12 +203,12 @@
     <center>
         <AnchorPane fx:id="mapPane" prefHeight="782.0" prefWidth="513.0" style="-fx-background-color: lightgreen;">
             <children>
-                <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="43.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="38.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@car-icon.jpg" />
                     </image>
                 </ImageView>
-                <Label layoutX="50.0" layoutY="160.0" text="Mapa" />
+                <Label layoutX="44.0" layoutY="37.0" text="Mapa" />
                 <Label layoutX="50.0" layoutY="175.0" text="Car" />
             </children>
         </AnchorPane>
