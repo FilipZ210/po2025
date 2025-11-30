@@ -61,8 +61,8 @@
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
-                                        <Button fx:id ="wlaczButton" mnemonicParsing="false" text="Włącz" />
-                                        <Button fx:id ="wylaczButton" mnemonicParsing="false" text="Wyłącz" />
+                                        <Button fx:id ="wlaczButton" mnemonicParsing="false" text="Włącz" onAction="#onWlaczButton" />
+                                        <Button fx:id ="wylaczButton" mnemonicParsing="false" text="Wyłącz" onAction="#onWylaczButton" />
                                         <Button fx:id ="inneButton" mnemonicParsing="false" text="Button" />
                                     </children>
                                 </HBox>
@@ -100,8 +100,8 @@
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
-                                        <Button fx:id = "zwiekszButton"  mnemonicParsing="false" text="Zwiększ bieg" />
-                                        <Button fx:id = "zmniejszButton" mnemonicParsing="false" text="Zmniejsz bieg" />
+                                        <Button fx:id = "zwiekszButton"  mnemonicParsing="false" text="Zwiększ bieg" onAction="#onZwiekszButton" />
+                                        <Button fx:id = "zmniejszButton" mnemonicParsing="false" text="Zmniejsz bieg" onAction="#onZmniejszButton" />
                                     </children>
                                 </HBox>
                             </children>
@@ -138,8 +138,8 @@
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
-                                        <Button fx:id = "dodajButton" mnemonicParsing="false" text="Dodaj gazu" />
-                                        <Button fx:id = "ujmijButton" mnemonicParsing="false" text="Ujmij gazu" />
+                                        <Button fx:id = "dodajButton" mnemonicParsing="false" text="Dodaj gazu" onAction="#onDodajButton" />
+                                        <Button fx:id = "ujmijButton" mnemonicParsing="false" text="Ujmij gazu" onAction="#onUjmijButton" />
                                     </children>
                                 </HBox>
                             </children>
@@ -176,8 +176,8 @@
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
-                                        <Button fx:id = "nacisnijButton" mnemonicParsing="false" text="Naciśnij" />
-                                        <Button fx:id = "zwolnijButton" mnemonicParsing="false" text="Zwolnij" />
+                                        <Button fx:id = "nacisnijButton" mnemonicParsing="false" text="Naciśnij" onAction="#onNacisnijButton" />
+                                        <Button fx:id = "zwolnijButton" mnemonicParsing="false" text="Zwolnij" onAction="#onZwolnijButton" />
                                     </children>
                                 </HBox>
                             </children>
