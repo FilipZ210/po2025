@@ -4,14 +4,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import symulator.*;
 
 public class HelloController {
 
-    // Komponenty symulatora
     private Samochod mojSamochod;
 
-    // Kontrolki FXML - przyciski
+    @FXML private TextField modelTextField;
+    @FXML private TextField nrRejestracyjnyTextField;
+    @FXML private TextField wagaTextField;
+    @FXML private TextField predkoscTextField;
+
     @FXML private Button wlaczButton;
     @FXML private Button wylaczButton;
     @FXML private Button zwiekszButton;
@@ -75,16 +80,34 @@ public class HelloController {
 
     @FXML
     protected void onDodajButton() {
-        // Tutaj będzie logika dodawania gazu (np. zwiększania obrotów)
         System.out.println("Dodano gazu.");
-        // updateGUI(); // Pamiętaj, aby wywołać, gdy ją zaimplementujesz
     }
 
     @FXML
     protected void onUjmijButton() {
-        // Tutaj będzie logika ujmowania gazu (np. zmniejszania obrotów)
+
         System.out.println("Ujęto gazu.");
-        // updateGUI(); // Pamiętaj, aby wywołać, gdy ją zaimplementujesz
+    }
+
+    void refresh() {
+        wagaTextField.setText(String.valueOf(mojSamochod.getWaga()));
+        nrRejestracyjnyTextField.setText(mojSamochod.getNrRejestracyjny());
+        predkoscTextField.setText(String.valueOf(mojSamochod.getPredkosc()));
+        modelTextField.setText(mojSamochod.getModel());
+    }
+
+    @FXML
+    public void initialize() {
+        System.out.println("HelloController initialized");
+        Image carImage = new
+                Image(getClass().getResource("car-icon.jpg").toExternalForm());
+        System.out.println("Image width: " +
+                carImage.getWidth() + ", height: " + carImage.getHeight());
+        carImage.setImage(carImage);
+        carImage.setFitWidth(30);
+        carImage.setFitHeight(20);
+        carImage.setTranslateX(0);
+        carImage.setTranslateY(0);
     }
 
 }
