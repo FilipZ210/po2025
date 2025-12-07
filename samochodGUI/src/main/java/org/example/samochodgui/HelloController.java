@@ -27,8 +27,12 @@ public class HelloController {
     @FXML private Button zwolnijButton;
     @FXML private ComboBox<String> samochodComboBox;
 
+    @FXML
+    private ImageView carImageView;
 
+    @FXML
     public void initialize() {
+        System.out.println("HelloController initialized");
 
         Silnik silnik = new Silnik(7000, 0, "Turbo", "V8");
         Sprzeglo sprzeglo = new Sprzeglo(false, "Sachs", "Sportowe");
@@ -37,19 +41,36 @@ public class HelloController {
 
         mojSamochod = new Samochod(silnik, skrzynia, pozycja);
 
+        Image carImage = new Image(getClass().getResource("car-icon.jpg").toExternalForm());
+        System.out.println("Width: " + carImage.getWidth() + ",Height: " + carImage.getHeight());
+
+        this.carImageView.setImage(carImage);
+
+        this.carImageView.setFitWidth(30);
+        this.carImageView.setFitHeight(20);
+
+        this.carImageView.setTranslateX(0);
+        this.carImageView.setTranslateY(0);
+
+        refresh();
     }
+
+
+
 
 
     @FXML
     protected void onWlaczButton() {
         mojSamochod.wlacz();
         System.out.println("Samochód włączony (Silnik Obroty: " + mojSamochod.getSilnik().getObroty() + ")");
+        refresh();
     }
 
     @FXML
     protected void onWylaczButton() {
         mojSamochod.wylacz();
         System.out.println("Samochód wyłączony (Bieg: " + mojSamochod.getSkrzynia().getAktualnyBieg() + ")");
+        refresh();
     }
 
 
@@ -57,12 +78,14 @@ public class HelloController {
     protected void onZwiekszButton() {
         mojSamochod.getSkrzynia().zwiekszBieg();
         System.out.println("Zwiększono bieg na: " + mojSamochod.getSkrzynia().getAktualnyBieg());
+        refresh();
     }
 
     @FXML
     protected void onZmniejszButton() {
         mojSamochod.getSkrzynia().zmniejszBieg();
         System.out.println("Zmniejszono bieg na: " + mojSamochod.getSkrzynia().getAktualnyBieg());
+        refresh();
     }
 
 
@@ -70,23 +93,26 @@ public class HelloController {
     protected void onNacisnijButton() {
         mojSamochod.getSkrzynia().getSprzeglo().wcisnij();
         System.out.println("Sprzęgło wciśnięte (Stan: " + mojSamochod.getSkrzynia().getSprzeglo().isStanSprzegla() + ")");
+        refresh();
     }
 
     @FXML
     protected void onZwolnijButton() {
         mojSamochod.getSkrzynia().getSprzeglo().zwolnij();
         System.out.println("Sprzęgło zwolnione (Stan: " + mojSamochod.getSkrzynia().getSprzeglo().isStanSprzegla() + ")");
+        refresh();
     }
 
     @FXML
     protected void onDodajButton() {
         System.out.println("Dodano gazu.");
+        refresh();
     }
 
     @FXML
     protected void onUjmijButton() {
-
         System.out.println("Ujęto gazu.");
+        refresh();
     }
 
     void refresh() {
@@ -94,20 +120,8 @@ public class HelloController {
         nrRejestracyjnyTextField.setText(mojSamochod.getNrRejestracyjny());
         predkoscTextField.setText(String.valueOf(mojSamochod.getPredkosc()));
         modelTextField.setText(mojSamochod.getModel());
-    }
 
-    @FXML
-    public void initialize() {
-        System.out.println("HelloController initialized");
-        Image carImage = new
-                Image(getClass().getResource("car-icon.jpg").toExternalForm());
-        System.out.println("Image width: " +
-                carImage.getWidth() + ", height: " + carImage.getHeight());
-        carImage.setImage(carImage);
-        carImage.setFitWidth(30);
-        carImage.setFitHeight(20);
-        carImage.setTranslateX(0);
-        carImage.setTranslateY(0);
+
     }
 
 }

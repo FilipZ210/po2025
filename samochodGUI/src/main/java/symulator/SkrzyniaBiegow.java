@@ -22,7 +22,6 @@ public class SkrzyniaBiegow extends Komponent {
             aktualnyBieg--;
         }
     }
-    // W klasie SkrzyniaBiegow:
 
     public int getAktualnyBieg() {
         return aktualnyBieg;

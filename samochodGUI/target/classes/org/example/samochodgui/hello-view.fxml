@@ -48,16 +48,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Model" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField fx:id="modelTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Nr rejestracyjny" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="nrRejestracyjnyTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="wagaTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Prędkość" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField fx:id="predkoscTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
@@ -87,16 +87,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Nazwa" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Cena" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Bieg" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
@@ -125,16 +125,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Nazwa" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Cena" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Obroty" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
@@ -163,16 +163,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Nazwa" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Cena" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Stan" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
@@ -201,9 +201,9 @@
     </left>
 
     <center>
-        <AnchorPane fx:id="mapPane" prefHeight="782.0" prefWidth="513.0" style="-fx-background-color: lightgreen;">
+        <AnchorPane  prefHeight="782.0" prefWidth="513.0" style="-fx-background-color: lightgreen;">
             <children>
-                <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="38.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="carImageView" fitHeight="100.0" fitWidth="100.0" layoutX="38.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@car-icon.jpg" />
                     </image>
