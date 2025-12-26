@@ -27,9 +27,9 @@
 
                 <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
-                        <ComboBox prefWidth="150.0" promptText="Samochód" />
-                        <Button mnemonicParsing="false" text="Dodaj nowy" />
-                        <Button layoutX="3.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Usuń" />
+                        <ComboBox fx:id="listaSamochodow" prefWidth="150.0" promptText="Samochód" />
+                        <Button mnemonicParsing="false" text="Dodaj nowy" onAction="#onDodajNowyClick"/>
+                        <Button layoutX="3.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Usuń" onAction="#onUsunAutoClick" />
                     </items>
                 </ToolBar>
             </children>
@@ -87,17 +87,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Nazwa" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
+                                <TextField fx:id="nazwaskrzyniaTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Cena" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
+                                <TextField fx:id="cenaskrzyniaTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
+                                <TextField fx:id="wagaskrzyniaTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Bieg" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
-
+                                <TextField fx:id="biegskrzyniaTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
                                         <Button fx:id = "zwiekszButton"  mnemonicParsing="false" text="Zwiększ bieg" onAction="#onZwiekszButton" />
@@ -125,16 +124,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Nazwa" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
+                                <TextField fx:id="nazwasilnikTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Cena" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
+                                <TextField fx:id="cenasilnikTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
+                                <TextField fx:id="wagasilnikTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Obroty" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
+                                <TextField fx:id="obrotysilnikTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>
@@ -163,16 +162,16 @@
                         <GridPane hgap="10.0" vgap="5.0">
                             <children>
                                 <Label text="Nazwa" GridPane.rowIndex="0" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
+                                <TextField fx:id="nazwasprzegloTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="0" />
 
                                 <Label text="Cena" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
+                                <TextField fx:id="cenasprzegloTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="1" />
 
                                 <Label text="Waga" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
+                                <TextField fx:id="wagasprzegloTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="2" />
 
                                 <Label text="Stan" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
+                                <TextField fx:id="stansprzegloTextField" GridPane.columnIndex="1" editable="false" GridPane.rowIndex="3" />
 
                                 <HBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                     <children>

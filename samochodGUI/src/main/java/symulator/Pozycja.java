@@ -4,17 +4,21 @@ public class Pozycja {
     double x;
     double y;
 
+    public void aktualizujPozycje(double deltaX, double deltaY) {
+        this.x += deltaX;
+        this.y += deltaY;
+    }
+
     public Pozycja(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    void aktualizujPozycje(double deltaX, double deltaY) {
-        this.x += deltaX;
-        this.y += deltaY;
+    public double getX() {
+        return x;
     }
 
-    String getPozycja(double x, double y) {
-        return x + " " + y;
+    public double getY() {
+        return y;
     }
 }

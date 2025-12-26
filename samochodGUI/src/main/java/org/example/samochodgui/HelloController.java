@@ -1,75 +1,131 @@
 package org.example.samochodgui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import symulator.*;
+import java.io.IOException;
 
 public class HelloController {
 
     private Samochod mojSamochod;
 
-    @FXML private TextField modelTextField;
-    @FXML private TextField nrRejestracyjnyTextField;
-    @FXML private TextField wagaTextField;
-    @FXML private TextField predkoscTextField;
+    @FXML public TextField modelTextField;
+    @FXML public TextField nrRejestracyjnyTextField;
+    @FXML public TextField wagaTextField;
+    @FXML public TextField predkoscTextField;
 
-    @FXML private Button wlaczButton;
-    @FXML private Button wylaczButton;
-    @FXML private Button zwiekszButton;
-    @FXML private Button zmniejszButton;
-    @FXML private Button dodajButton;
-    @FXML private Button ujmijButton;
-    @FXML private Button nacisnijButton;
-    @FXML private Button zwolnijButton;
-    @FXML private ComboBox<String> samochodComboBox;
+    @FXML public TextField nazwaskrzyniaTextField;
+    @FXML public TextField cenaskrzyniaTextField;
+    @FXML public TextField wagaskrzyniaTextField;
+    @FXML public TextField biegskrzyniaTextField;
+
+    @FXML public TextField nazwasprzegloTextField;
+    @FXML public TextField cenasprzegloTextField;
+    @FXML public TextField wagasprzegloTextField;
+    @FXML public TextField stansprzegloTextField;
+
+    @FXML public TextField nazwasilnikTextField;
+    @FXML public TextField cenasilnikTextField;
+    @FXML public TextField wagasilnikTextField;
+    @FXML public TextField obrotysilnikTextField;
+
+    @FXML public Button wlaczButton;
+    @FXML public Button wylaczButton;
+    @FXML public Button zwiekszButton;
+    @FXML public Button zmniejszButton;
+    @FXML public Button dodajButton;
+    @FXML public Button ujmijButton;
+    @FXML public Button nacisnijButton;
+    @FXML public Button zwolnijButton;
+    @FXML public ComboBox<Samochod> listaSamochodow;
+
 
     @FXML
-    private ImageView carImageView;
+    public ImageView carImageView;
+
+    private ObservableList<Samochod> naszeAuta = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        System.out.println("HelloController initialized");
+        listaSamochodow.setItems(naszeAuta); //wiazemy liste z kontrolka
 
-        Silnik silnik = new Silnik(7000, 0, "Turbo", "V8");
-        Sprzeglo sprzeglo = new Sprzeglo(false, "Sachs", "Sportowe");
-        SkrzyniaBiegow skrzynia = new SkrzyniaBiegow(0, 5, sprzeglo, "Getrag", "Manuala");
-        Pozycja pozycja = new Pozycja(0, 0);
+        listaSamochodow.setOnAction(e -> {
+            mojSamochod = listaSamochodow.getSelectionModel().getSelectedItem();
+            refresh();
+        });
 
-        mojSamochod = new Samochod(silnik, skrzynia, pozycja);
+        try {
+            // Ścieżka musi odpowiadać lokalizacji pliku w folderze resources (np. resources/images/car.png)
+            Image carImage = new Image(getClass().getResource("/images/car.png").toExternalForm());
 
-        Image carImage = new Image(getClass().getResource("car-icon.jpg").toExternalForm());
-        System.out.println("Width: " + carImage.getWidth() + ",Height: " + carImage.getHeight());
+            System.out.println("Image width: " + carImage.getWidth() + ", height: " + carImage.getHeight());
 
-        this.carImageView.setImage(carImage);
+            carImageView.setImage(carImage);
+            carImageView.setFitWidth(30); // Szerokość ikonki
+            carImageView.setFitHeight(20); // Wysokość ikonki
 
-        this.carImageView.setFitWidth(30);
-        this.carImageView.setFitHeight(20);
+            // Ustawienie pozycji początkowej (0,0) na AnchorPane
+            carImageView.setTranslateX(0);
+            carImageView.setTranslateY(0);
+        } catch (Exception e) {
+            System.out.println("Nie udało się załadować obrazka! Sprawdź czy plik jest w folderze resources/images/");
+        }
+    }
 
-        this.carImageView.setTranslateX(0);
-        this.carImageView.setTranslateY(0);
+    @FXML
+    protected void onDodajNowyClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("car-add.fxml")); // Upewnij się co do nazwy pliku .fxml
+            Scene scene = new Scene(loader.load());
 
-        refresh();
+            AddCarController addController = loader.getController();
+            addController.setMainController(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Dodaj nowy samochód");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
+    @FXML
+    protected void onUsunAutoClick() {
+        if (mojSamochod != null) {
+            naszeAuta.remove(mojSamochod);
+            if (!naszeAuta.isEmpty()) {
+                listaSamochodow.getSelectionModel().selectFirst();
+            }
+        }
+    }
 
-
+    public void dodajSamochod(Samochod nowySamochod) {
+        naszeAuta.add(nowySamochod);
+        listaSamochodow.getSelectionModel().select(nowySamochod);
+    }
 
     @FXML
     protected void onWlaczButton() {
         mojSamochod.wlacz();
-        System.out.println("Samochód włączony (Silnik Obroty: " + mojSamochod.getSilnik().getObroty() + ")");
+        System.out.println("Samochód włączony");
         refresh();
     }
 
     @FXML
     protected void onWylaczButton() {
         mojSamochod.wylacz();
-        System.out.println("Samochód wyłączony (Bieg: " + mojSamochod.getSkrzynia().getAktualnyBieg() + ")");
+        System.out.println("Samochód wyłączony");
         refresh();
     }
 
@@ -77,14 +133,12 @@ public class HelloController {
     @FXML
     protected void onZwiekszButton() {
         mojSamochod.getSkrzynia().zwiekszBieg();
-        System.out.println("Zwiększono bieg na: " + mojSamochod.getSkrzynia().getAktualnyBieg());
         refresh();
     }
 
     @FXML
     protected void onZmniejszButton() {
         mojSamochod.getSkrzynia().zmniejszBieg();
-        System.out.println("Zmniejszono bieg na: " + mojSamochod.getSkrzynia().getAktualnyBieg());
         refresh();
     }
 
@@ -92,26 +146,26 @@ public class HelloController {
     @FXML
     protected void onNacisnijButton() {
         mojSamochod.getSkrzynia().getSprzeglo().wcisnij();
-        System.out.println("Sprzęgło wciśnięte (Stan: " + mojSamochod.getSkrzynia().getSprzeglo().isStanSprzegla() + ")");
+        System.out.println("Sprzęgło wciśnięte (Stan: " + mojSamochod.getSkrzynia().getSprzeglo().getStanSprzegla() + ")");
         refresh();
     }
 
     @FXML
     protected void onZwolnijButton() {
         mojSamochod.getSkrzynia().getSprzeglo().zwolnij();
-        System.out.println("Sprzęgło zwolnione (Stan: " + mojSamochod.getSkrzynia().getSprzeglo().isStanSprzegla() + ")");
+        System.out.println("Sprzęgło zwolnione (Stan: " + mojSamochod.getSkrzynia().getSprzeglo().getStanSprzegla() + ")");
         refresh();
     }
 
     @FXML
     protected void onDodajButton() {
-        System.out.println("Dodano gazu.");
+       mojSamochod.getSilnik().zwiekszObroty();
         refresh();
     }
 
     @FXML
     protected void onUjmijButton() {
-        System.out.println("Ujęto gazu.");
+        mojSamochod.getSilnik().zmniejszObroty();
         refresh();
     }
 
@@ -121,6 +175,23 @@ public class HelloController {
         predkoscTextField.setText(String.valueOf(mojSamochod.getPredkosc()));
         modelTextField.setText(mojSamochod.getModel());
 
+        //skrzynia
+        biegskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getAktualnyBieg()));
+        nazwaskrzyniaTextField.setText(mojSamochod.getSkrzynia().getNazwa());
+        cenaskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getCena()));
+        wagaskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getWaga()));
+
+        //sprzeglo
+        nazwasprzegloTextField.setText(mojSamochod.getSkrzynia().getSprzeglo().getNazwa());
+        cenasprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getCena()));
+        stansprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getStanSprzegla()));
+        wagasprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getWaga()));
+
+        //silnik
+        nazwasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getNazwa()));
+        obrotysilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getObroty()));
+        cenasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getCena()));
+        wagasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getWaga()));
 
     }
 

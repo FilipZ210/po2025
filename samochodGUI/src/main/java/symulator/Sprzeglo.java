@@ -1,10 +1,10 @@
 package symulator;
 
 public class Sprzeglo extends Komponent {
-    boolean stanSprzegla;
+    private boolean stanSprzegla;
 
-    public Sprzeglo(boolean stanSprzegla, String producent, String model ) {
-        super(producent, model);
+    public Sprzeglo(String nazwa, float waga, float cena, boolean stanSprzegla) {
+        super(nazwa, waga, cena);
         this.stanSprzegla = stanSprzegla;
     }
 
@@ -18,7 +18,7 @@ public class Sprzeglo extends Komponent {
         stanSprzegla = false;
     }
 
-    public boolean isStanSprzegla() {
+    public boolean getStanSprzegla() {
         return stanSprzegla;
     }
 }

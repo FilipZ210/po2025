@@ -1,17 +1,23 @@
 package symulator;
 
-public class Komponent {
-    protected String producent;
-    protected String model;
+public abstract class Komponent {
+    protected String nazwa;
+    protected float waga;
+    protected float cena;
 
-    public Komponent(String producent, String model) {
-        this.producent = producent;
-        this.model = model;
+    public Komponent(String nazwa, float waga, float cena) {
+        this.nazwa = nazwa;
+        this.waga = waga;
+        this.cena = cena;
     }
-    String get_Producent() {
-        return producent;
+    public String getNazwa() {
+        return nazwa;
     }
-    String get_Model() {
-        return model;
+    public float getWaga() {
+        return waga;
     }
+    public float getCena() {
+        return cena;
+    }
+
 }
