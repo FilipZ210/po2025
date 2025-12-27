@@ -1,20 +1,23 @@
 package org.example.samochodgui;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import symulator.*;
 import java.io.IOException;
 
-public class HelloController {
+public class HelloController  implements Listener{
 
     private Samochod mojSamochod;
 
@@ -46,8 +49,10 @@ public class HelloController {
     @FXML public Button ujmijButton;
     @FXML public Button nacisnijButton;
     @FXML public Button zwolnijButton;
+
     @FXML public ComboBox<Samochod> listaSamochodow;
 
+    @FXML public AnchorPane mapa;
 
     @FXML
     public ImageView carImageView;
@@ -56,35 +61,53 @@ public class HelloController {
 
     @FXML
     public void initialize() {
+        mapa.setOnMouseClicked(event -> {
+            if(mojSamochod != null) {
+
+                double x = event.getX();
+                double y = event.getY();
+                Pozycja nowaPozycja = new Pozycja(x, y);
+                mojSamochod.jedzDo(nowaPozycja);
+            }
+        });
+
         listaSamochodow.setItems(naszeAuta); //wiazemy liste z kontrolka
 
         listaSamochodow.setOnAction(e -> {
+            if( mojSamochod != null) {
+                mojSamochod.removeListener(this);
+            }
             mojSamochod = listaSamochodow.getSelectionModel().getSelectedItem();
-            refresh();
+
+            if (mojSamochod != null) {
+                mojSamochod.addListener(this);
+                refresh();
+            } else {
+                listaSamochodow.getSelectionModel().clearSelection();
+            }
         });
 
         try {
-            // Ścieżka musi odpowiadać lokalizacji pliku w folderze resources (np. resources/images/car.png)
-            Image carImage = new Image(getClass().getResource("/images/car.png").toExternalForm());
+            Image carImage = new Image(getClass().getResource("car-icon.jpg").toExternalForm());
 
             System.out.println("Image width: " + carImage.getWidth() + ", height: " + carImage.getHeight());
 
             carImageView.setImage(carImage);
-            carImageView.setFitWidth(30); // Szerokość ikonki
-            carImageView.setFitHeight(20); // Wysokość ikonki
+            carImageView.setVisible(false);
+            carImageView.setFitWidth(60);
+            carImageView.setFitHeight(40);
 
-            // Ustawienie pozycji początkowej (0,0) na AnchorPane
             carImageView.setTranslateX(0);
             carImageView.setTranslateY(0);
         } catch (Exception e) {
-            System.out.println("Nie udało się załadować obrazka! Sprawdź czy plik jest w folderze resources/images/");
+            System.out.println("Nie udało się załadować obrazka! ");
         }
     }
 
     @FXML
     protected void onDodajNowyClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("car-add.fxml")); // Upewnij się co do nazwy pliku .fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("car-add.fxml"));
             Scene scene = new Scene(loader.load());
 
             AddCarController addController = loader.getController();
@@ -95,24 +118,38 @@ public class HelloController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
+            pokazBlad(e.getMessage());
             e.printStackTrace();
         }
+        wyczyscPola();
     }
 
 
     @FXML
     protected void onUsunAutoClick() {
         if (mojSamochod != null) {
+            mojSamochod.removeListener(this);
             naszeAuta.remove(mojSamochod);
+            mojSamochod = null;
             if (!naszeAuta.isEmpty()) {
                 listaSamochodow.getSelectionModel().selectFirst();
+            } else {
+                listaSamochodow.getSelectionModel().clearSelection();
+                wyczyscPola();
             }
         }
+        refresh();
     }
 
     public void dodajSamochod(Samochod nowySamochod) {
         naszeAuta.add(nowySamochod);
         listaSamochodow.getSelectionModel().select(nowySamochod);
+
+        nowySamochod.setController(this);
+
+        Thread t = new Thread(nowySamochod);
+        t.setDaemon(true);
+        t.start();
     }
 
     @FXML
@@ -169,29 +206,78 @@ public class HelloController {
         refresh();
     }
 
-    void refresh() {
-        wagaTextField.setText(String.valueOf(mojSamochod.getWaga()));
-        nrRejestracyjnyTextField.setText(mojSamochod.getNrRejestracyjny());
-        predkoscTextField.setText(String.valueOf(mojSamochod.getPredkosc()));
-        modelTextField.setText(mojSamochod.getModel());
+    public void update() {
+        Platform.runLater(this::refresh);
+    }
 
-        //skrzynia
-        biegskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getAktualnyBieg()));
-        nazwaskrzyniaTextField.setText(mojSamochod.getSkrzynia().getNazwa());
-        cenaskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getCena()));
-        wagaskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getWaga()));
+    public void refresh() {
+        if (mojSamochod != null) {
+            wagaTextField.setText(String.valueOf(mojSamochod.getWaga()));
+            nrRejestracyjnyTextField.setText(mojSamochod.getNrRejestracyjny());
+            predkoscTextField.setText(String.format("%.2f", mojSamochod.predkosc));
+            modelTextField.setText(mojSamochod.getModel());
 
-        //sprzeglo
-        nazwasprzegloTextField.setText(mojSamochod.getSkrzynia().getSprzeglo().getNazwa());
-        cenasprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getCena()));
-        stansprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getStanSprzegla()));
-        wagasprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getWaga()));
+            //skrzynia
+            biegskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getAktualnyBieg()));
+            nazwaskrzyniaTextField.setText(mojSamochod.getSkrzynia().getNazwa());
+            cenaskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getCena()));
+            wagaskrzyniaTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getWaga()));
 
-        //silnik
-        nazwasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getNazwa()));
-        obrotysilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getObroty()));
-        cenasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getCena()));
-        wagasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getWaga()));
+            //sprzeglo
+            nazwasprzegloTextField.setText(mojSamochod.getSkrzynia().getSprzeglo().getNazwa());
+            cenasprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getCena()));
+            stansprzegloTextField.setText(mojSamochod.getSkrzynia().getSprzeglo().getStanSprzegla() ? "Wciśnięte" : "Zwolnione");
+            wagasprzegloTextField.setText(String.valueOf(mojSamochod.getSkrzynia().getSprzeglo().getWaga()));
+
+            //silnik
+            nazwasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getNazwa()));
+            obrotysilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getObroty()));
+            cenasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getCena()));
+            wagasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getWaga()));
+
+            javafx.application.Platform.runLater(() -> {
+                carImageView.setVisible(true);
+                carImageView.setTranslateX(mojSamochod.getPozycja().getX()-30);
+                carImageView.setTranslateY(mojSamochod.getPozycja().getY()-20);
+            });
+        }
+
+    }
+
+    private void pokazBlad(String wiadomosc) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Blad");
+        alert.setHeaderText("Zla operacja");
+        alert.setContentText(wiadomosc);
+        alert.showAndWait();
+    }
+
+    private void wyczyscPola() {
+        carImageView.setVisible(false);
+
+        // Czyścimy pola główne
+        modelTextField.clear();
+        nrRejestracyjnyTextField.clear();
+        wagaTextField.clear();
+        predkoscTextField.clear();
+
+        // Czyścimy pola skrzyni
+        nazwaskrzyniaTextField.clear();
+        cenaskrzyniaTextField.clear();
+        wagaskrzyniaTextField.clear();
+        biegskrzyniaTextField.clear();
+
+        // Czyścimy pola sprzęgła
+        nazwasprzegloTextField.clear();
+        cenasprzegloTextField.clear();
+        wagasprzegloTextField.clear();
+        stansprzegloTextField.clear();
+
+        // Czyścimy pola silnika
+        nazwasilnikTextField.clear();
+        cenasilnikTextField.clear();
+        wagasilnikTextField.clear();
+        obrotysilnikTextField.clear();
 
     }
 

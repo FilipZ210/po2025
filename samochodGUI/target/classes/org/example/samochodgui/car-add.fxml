@@ -35,8 +35,8 @@
 
         <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
             <children>
-                <Button mnemonicParsing="false" onAction="#onConfirmButton" text="Zapisz" />
-                <Button mnemonicParsing="false" onAction="#closeWindow" text="Anuluj" />
+                <Button fx:id= "zapiszButton" mnemonicParsing="false" onAction="#onConfirmButton" text="Zapisz" />
+                <Button fx:id="anulujButton" mnemonicParsing="false" onAction="#closeWindow" text="Anuluj" />
             </children>
             <padding>
                 <Insets top="10.0" />

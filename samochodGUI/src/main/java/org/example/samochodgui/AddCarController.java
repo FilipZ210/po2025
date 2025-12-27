@@ -1,6 +1,5 @@
 package org.example.samochodgui;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -8,14 +7,19 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import symulator.*;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 
 public class AddCarController {
 
     public HelloController mainController;
+
     @FXML public TextField modelTextField;
     @FXML public TextField registrationTextField;
     @FXML public TextField weightTextField;
     @FXML public TextField speedTextField;
+
+    @FXML public Button zapiszButton;
+    @FXML public Button anulujButton;
 
     @FXML private ComboBox<Silnik> silnikComboBox;
     @FXML private ComboBox<SkrzyniaBiegow> skrzyniaComboBox;
@@ -31,9 +35,9 @@ public class AddCarController {
         Sprzeglo noweSprzeglo = new Sprzeglo("Standard", 10, 500, false);
 
         ObservableList<Silnik> silniki = FXCollections.observableArrayList(
-                new Silnik("Benzyna", 200, 10000, 6000, 1000),
-                new Silnik("Hybryda", 250, 20000, 8000, 1000),
-                new Silnik("Elektryczny", 300, 30000, 10000, 1000)
+                new Silnik("Benzyna", 200, 10000, 6000, 0),
+                new Silnik("Hybryda", 250, 20000, 8000, 0),
+                new Silnik("Elektryczny", 300, 30000, 10000, 0)
         );
 
         silnikComboBox.setItems(silniki);
@@ -80,7 +84,7 @@ public class AddCarController {
 
     @FXML
     private void closeWindow() {
-        Stage stage = (Stage) modelTextField.getScene().getWindow();
+        Stage stage = (Stage) anulujButton.getScene().getWindow();
         stage.close();
     }
 }

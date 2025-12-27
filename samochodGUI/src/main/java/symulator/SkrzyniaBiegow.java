@@ -2,9 +2,8 @@ package symulator;
 
 public class SkrzyniaBiegow extends Komponent {
     int aktualnyBieg;
-    private int iloscBiegow;
-    private Sprzeglo sprzeglo;
-    private float aktualnePrzelozenie;
+    public int iloscBiegow;
+    public Sprzeglo sprzeglo;
 
     public SkrzyniaBiegow(String nazwa, float waga, float cena,int iloscBiegow,  Sprzeglo sprzeglo) {
         super(nazwa, waga, cena);
@@ -38,20 +37,12 @@ public class SkrzyniaBiegow extends Komponent {
         return aktualnyBieg;
     }
 
-    public int getIloscBiegow() {
-        return iloscBiegow;
-    }
-
-    public float getAktualnePrzelozenie() {
-        return aktualnePrzelozenie;
-    }
-
     public Sprzeglo getSprzeglo() {
         return sprzeglo;
     }
 
     @Override
     public String toString() {
-        return this.nazwa; // Zwróci np. "Benzyna" lub "Elektryczny"
+        return this.nazwa;
     }
 }

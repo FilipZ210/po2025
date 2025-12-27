@@ -200,7 +200,7 @@
     </left>
 
     <center>
-        <AnchorPane  prefHeight="782.0" prefWidth="513.0" style="-fx-background-color: lightgreen;">
+        <AnchorPane fx:id = "mapa"  prefHeight="782.0" prefWidth="513.0" style="-fx-background-color: lightgreen;">
             <children>
                 <ImageView fx:id="carImageView" fitHeight="100.0" fitWidth="100.0" layoutX="38.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                     <image>
