@@ -57,7 +57,7 @@ public class HelloController  implements Listener{
     @FXML
     public ImageView carImageView;
 
-    private ObservableList<Samochod> naszeAuta = FXCollections.observableArrayList();
+    private final ObservableList<Samochod> naszeAuta = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -73,7 +73,7 @@ public class HelloController  implements Listener{
 
         listaSamochodow.setItems(naszeAuta); //wiazemy liste z kontrolka
 
-        listaSamochodow.setOnAction(e -> {
+        listaSamochodow.setOnAction(_ -> {
             if( mojSamochod != null) {
                 mojSamochod.removeListener(this);
             }
@@ -88,17 +88,21 @@ public class HelloController  implements Listener{
         });
 
         try {
-            Image carImage = new Image(getClass().getResource("car-icon.jpg").toExternalForm());
+            var resource = getClass().getResource("car-icon.jpg");
+            if (resource != null) {
+                Image carImage = new Image(resource.toExternalForm());
+                carImageView.setImage(carImage);
+                carImageView.setVisible(false);
+                carImageView.setFitWidth(60);
+                carImageView.setFitHeight(40);
 
-            System.out.println("Image width: " + carImage.getWidth() + ", height: " + carImage.getHeight());
+                carImageView.setTranslateX(0);
+                carImageView.setTranslateY(0);
 
-            carImageView.setImage(carImage);
-            carImageView.setVisible(false);
-            carImageView.setFitWidth(60);
-            carImageView.setFitHeight(40);
+            } else {
+                System.err.println("BŁĄD: Nie znaleziono pliku car-icon.jpg w folderze resources!");
+            }
 
-            carImageView.setTranslateX(0);
-            carImageView.setTranslateY(0);
         } catch (Exception e) {
             System.out.println("Nie udało się załadować obrazka! ");
         }
@@ -145,11 +149,12 @@ public class HelloController  implements Listener{
         naszeAuta.add(nowySamochod);
         listaSamochodow.getSelectionModel().select(nowySamochod);
 
-        nowySamochod.setController(this);
+        this.mojSamochod = nowySamochod;
+        nowySamochod.addListener(this);
 
-        Thread t = new Thread(nowySamochod);
-        t.setDaemon(true);
-        t.start();
+        nowySamochod.setDaemon(true);
+        nowySamochod.start();
+        refresh();
     }
 
     @FXML
@@ -235,11 +240,9 @@ public class HelloController  implements Listener{
             cenasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getCena()));
             wagasilnikTextField.setText(String.valueOf(mojSamochod.getSilnik().getWaga()));
 
-            javafx.application.Platform.runLater(() -> {
-                carImageView.setVisible(true);
-                carImageView.setTranslateX(mojSamochod.getPozycja().getX()-30);
-                carImageView.setTranslateY(mojSamochod.getPozycja().getY()-20);
-            });
+            carImageView.setVisible(true);
+            carImageView.setTranslateX(mojSamochod.getPozycja().getX()-30);
+            carImageView.setTranslateY(mojSamochod.getPozycja().getY()-20);
         }
 
     }

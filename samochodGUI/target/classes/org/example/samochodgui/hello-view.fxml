@@ -207,8 +207,6 @@
                         <Image url="@car-icon.jpg" />
                     </image>
                 </ImageView>
-                <Label layoutX="44.0" layoutY="37.0" text="Mapa" />
-                <Label layoutX="50.0" layoutY="175.0" text="Car" />
             </children>
         </AnchorPane>
     </center>

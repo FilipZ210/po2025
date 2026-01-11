@@ -4,4 +4,7 @@ module org.example.samochodgui {
 
     opens org.example.samochodgui to javafx.fxml;
     exports org.example.samochodgui;
+
+    exports symulator;
+    opens symulator to javafx.fxml;
 }

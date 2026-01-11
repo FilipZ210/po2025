@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 
 public class AddCarController {
 
-    public HelloController mainController;
+    private HelloController mainController;
 
     @FXML public TextField modelTextField;
     @FXML public TextField registrationTextField;

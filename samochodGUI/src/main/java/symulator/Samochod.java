@@ -1,20 +1,16 @@
 package symulator;
 
-import org.example.samochodgui.HelloController;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Samochod extends Thread  {
 
-    public HelloController controller;
     public Silnik silnik;
     public SkrzyniaBiegow skrzynia;
     public Pozycja cel;
     public Pozycja  pozycja;
     public String model;
     public String nrRejestracyjny;
-    public boolean stanWlaczenia;
     public int predkoscMax;
     public double predkosc = 0;
     public float waga;
@@ -28,7 +24,6 @@ public class Samochod extends Thread  {
         this.silnik = silnik;
         this.skrzynia = skrzynia;
         this.predkoscMax = predkoscMax;
-        this.stanWlaczenia = false;
 
         this.pozycja = new Pozycja(0,0);
 
@@ -83,17 +78,13 @@ public class Samochod extends Thread  {
         } else {
             double obroty = silnik.getObroty();
             int aktualnyBieg = skrzynia.getAktualnyBieg();
-            double obliczonaPredkosc = (obroty * aktualnyBieg) / 300;
+            double obliczonaPredkosc = (obroty * aktualnyBieg) / 300.0;
 
             if (obliczonaPredkosc > predkoscMax) {
                 obliczonaPredkosc = predkoscMax;
             }
             this.predkosc = obliczonaPredkosc;
         }
-    }
-
-    public void setController(HelloController controller) {
-        this.controller = controller;
     }
 
     @Override
